@@ -1,69 +1,6 @@
 require 'rubygems'
 require 'gosu'
-
-class Ball
-	attr_reader :x, :y, :w, :h
-
-	def initialize(window)
-		@window = window
-		@x, @y = 400, 200
-		@vx, @vy = 5, 5
-		@w, @h = 20, 20
-		@image = Gosu::Image.new(@window, 'ball.png', false)
-	end
-
-	def draw
-		@image.draw(@x, @y, 1)
-	end
-
-	def bounce
-		@vx -= 5
-	end
-
-	def move
-		@x += @vx
-		@y += @vy
-		if @y > (@window.height - @h)
-			@vy = -5
-		end
-		if @x > (@window.width - @w)
-			@vx = -5
-		end
-		if @x < 0
-			@vx = 5
-		end
-		if @y < 0
-			@vy = 5
-		end
-	end
-end
-
-class Paddle
-	attr_reader :x, :y, :w, :h
-
-	def initialize(window, xpos)
-		@window = window
-		@w, @h = 20, 60
-		@x, @y = xpos, (@window.height/2) - (@h / 2)
-		@image = Gosu::Image.new(@window, 'paddle.png', false)
-	end
-
-	def draw
-		@image.draw(@x, @y, 1)
-	end
-
-	def move_up
-		unless @y < 0
-			@y -= 5
-		end
-	end
-
-	def move_down
-		unless @y > (@window.height - @h)
-			@y += 5
-		end
-	end
-end
+Dir["./lib/*.rb"].each {|file| require file }
 
 class GameWindow < Gosu::Window
 	attr_accessor :width, :height
@@ -79,7 +16,7 @@ class GameWindow < Gosu::Window
 	end
 
 	def touching?(obj1, obj2)
-		(obj1.x > (obj2.x - obj1.x)) and (obj1.y < (obj2.y + obj2.w)) and obj1.y > obj2.y - obj1.h and obj1.y < obj2.y + obj2.h
+		obj1.x > obj2.x - obj1.w and obj1.x < obj2.x + obj2.w and obj1.y > obj2.y - obj1.h and obj1.y < obj2.y + obj2.h
 	end
 
 	def update
@@ -87,14 +24,17 @@ class GameWindow < Gosu::Window
 		if button_down?(Gosu::KbW)
 			@left_paddle.move_up
 		end
-		if button_down?(Gosu::KbZ)
+		if button_down?(Gosu::KbS)
 			@left_paddle.move_down
 		end
-		if button_down?(Gosu::KbU)
+		if button_down?(Gosu::KbP)
 			@right_paddle.move_up
 		end
-		if button_down?(Gosu::KbN)
+		if button_down?(Gosu::KbL)
 			@right_paddle.move_down
+		end
+		if touching?(@right_paddle, @ball)
+			@ball.bounce
 		end
 		if touching?(@left_paddle, @ball)
 			@ball.bounce
