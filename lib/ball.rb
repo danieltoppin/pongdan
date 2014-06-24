@@ -4,7 +4,7 @@ class Ball
 	def initialize(window)
 		@window = window
 		@x, @y = 400, 270
-		@vx, @vy = 3, 3
+		@vx, @vy = 5, 5
 		@w, @h = 20, 20
 		@image = Gosu::Image.new(@window, 'ball.png', false)
 	end
@@ -14,23 +14,23 @@ class Ball
 	end
 
 	def bounce
-		@vx -= 5 * @vx
+		@vx = -1 * @vx
 	end
 
 	def move
 		@x += @vx
 		@y += @vy
 		if @y > (@window.height - @h)
-			@vy = -3
+			@vy = -5
 		end
 		if @x > (@window.width - @w)
-			@vx = -3
+			@vx = -5
 		end
 		if @x < 0
-			@vx = 3
+			@vx = 5
 		end
 		if @y < 0
-			@vy = 3
+			@vy = 5
 		end
 	end
 end

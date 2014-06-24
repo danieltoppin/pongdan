@@ -13,6 +13,8 @@ class GameWindow < Gosu::Window
 		@ball = Ball.new(self)
 		@left_paddle = Paddle.new(self, 20)
 		@right_paddle = Paddle.new(self, 760)
+		@left_score = Score.new(self, 20)
+		@right_score = Score.new(self, 760)
 	end
 
 	def touching?(obj1, obj2)
@@ -39,12 +41,21 @@ class GameWindow < Gosu::Window
 		if touching?(@left_paddle, @ball)
 			@ball.bounce
 		end
+		if @ball.x < 0
+			@right_score.increase
+		end
+
+		if @ball.x > 780
+			@left_score.increase
+		end
 	end
 
 	def draw
 		@ball.draw
 		@left_paddle.draw
 		@right_paddle.draw
+		@right_score.draw
+		@left_score.draw
 	end
 end
 
