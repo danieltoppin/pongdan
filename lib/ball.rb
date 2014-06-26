@@ -20,17 +20,33 @@ class Ball
 	def move
 		@x += @vx
 		@y += @vy
-		if @y > (@window.height - @h)
+		if hit_bottom_wall
 			@vy = -5
 		end
-		if @x > (@window.width - @w)
+		if hit_right_wall
 			@vx = -5
 		end
-		if @x < 0
+		if hit_left_wall
 			@vx = 5
 		end
-		if @y < 0
+		if hit_top_wall
 			@vy = 5
 		end
+	end
+
+	def hit_left_wall
+		@x < 0
+	end
+
+	def hit_right_wall
+		@x > (@window.width - @w)
+	end
+
+	def hit_bottom_wall
+		@y > (@window.height - @h)
+	end
+
+	def hit_top_wall
+		@y < 0
 	end
 end

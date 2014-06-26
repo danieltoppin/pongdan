@@ -1,17 +1,33 @@
 class Score
+
 	def initialize(window, xpos)
-		@value = 0
+		@score = 0
+		@locked = true
 		@x = xpos
 		@y = 20
 		@font = Gosu::Font.new(window, 'System', 30)
 	end
 
 	def draw
-		@font.draw("#{@value}", @x, @y, 1)
+		@font.draw("#{@score}", @x, @y, 1)
 	end
 
 	def increase
-		@value = @value + 1
+		unless is_locked?
+			@score = @score + 1
+		end
+	end
+
+	def unlock
+		@locked = false
+	end
+
+	def lock
+		@locked = true
+	end
+
+	def is_locked?
+		@locked == true
 	end
 
 end
