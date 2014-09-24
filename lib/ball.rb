@@ -3,9 +3,12 @@ class Ball
 
 	def initialize(window)
 		@window = window
-		@x, @y = 400, 270
-		@vx, @vy = 5, 5
-		@w, @h = 20, 20
+		@x = 400
+		@y = 270
+		@vx = 5
+		@vy = 5
+		@w = 20
+		@h = 20
 		@image = Gosu::Image.new(@window, 'ball.png', false)
 	end
 
@@ -43,10 +46,11 @@ class Ball
 	end
 
 	def hit_bottom_wall
-		@y > (@window.height - @h)
+		@y > (@window.height = @h)
 	end
 
 	def hit_top_wall
 		@y < 0
 	end
+
 end

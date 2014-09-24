@@ -1,10 +1,12 @@
 class Paddle
 	attr_reader :x, :y, :w, :h
 
-	def initialize(window, xpos)
+	def initialize (window, xpos)
 		@window = window
-		@w, @h = 20, 60
-		@x, @y = xpos, (@window.height/2) - (@h / 2)
+		@w = 20
+		@h = 60
+		@x = xpos
+		@y = (@window.height/2) - (@h / 2)
 		@image = Gosu::Image.new(@window, 'paddle.png', false)
 	end
 
