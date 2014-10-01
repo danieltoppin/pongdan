@@ -52,6 +52,4 @@ class Ball
 	def hit_right_wall
 		@x > (@window.width - @w)
 	end
-
-	
 end
