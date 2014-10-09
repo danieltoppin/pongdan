@@ -11,8 +11,8 @@ class GameWindow < Gosu::Window
 		super @width, @height, false
 		self.caption = 'Pong Game'
 		@ball = Ball.new(self)
-		@left_paddle = Paddle.new(self, 20) #postion on xaxis
-		@right_paddle = Paddle.new(self, 760)
+		@left_paddle = Paddle.new(self, 0) #postion on xaxis
+		@right_paddle = Paddle.new(self, 780)
 		@left_score = Score.new(self, 20)
 		@right_score = Score.new(self, 760)
 	end
@@ -44,25 +44,19 @@ class GameWindow < Gosu::Window
 			@right_paddle.move_down
 		end
 		if touching?(@right_paddle, @ball)
-			@right_score.unlock
-			@left_score.lock
 			@ball.bounce
 		end
 		if touching?(@left_paddle, @ball)
-			@left_score.unlock
-			@right_score.lock
+			
+			
 			@ball.bounce
 		end
 		if @ball.hit_left_wall
 			@right_score.increase
-			@left_score.unlock
-			@right_score.lock
 		end
 
 		if @ball.hit_right_wall
 			@left_score.increase
-			@right_score.unlock
-			@left_score.lock
 		end
 	end
 	
